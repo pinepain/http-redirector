@@ -1,0 +1,21 @@
+dist: trusty
+sudo: required
+
+go:
+  - 1.10
+
+services:
+  - docker
+
+install:
+  # Install Go dep tool, as per https://github.com/golang/dep#installation
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+
+script:
+  - dep status
+  - go test -cover
+  - go build
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  

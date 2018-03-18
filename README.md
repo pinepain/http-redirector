@@ -2,7 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/pinepain/http-redirector.svg?branch=master)](https://travis-ci.org/pinepain/http-redirector)
 [![codecov](https://codecov.io/gh/pinepain/http-redirector/branch/master/graph/badge.svg)](https://codecov.io/gh/pinepain/http-redirector)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/pinepain/http-redirector)](https://goreportcard.com/report/github.com/pinepain/http-redirector)
 
 Simple `http` to anything redirector. By default it is `http` -> `https` redirector.
 

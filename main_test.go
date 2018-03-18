@@ -8,15 +8,15 @@ import (
 	"testing"
 )
 
-func responseFor(ctxt Context, url string) *httptest.ResponseRecorder {
+func responseFor(ctxt context, url string) *httptest.ResponseRecorder {
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("TEST", url, nil)
 	ctxt.redirectHandler(w, r)
 	return w
 }
 
-func shouldRedirect(t *testing.T, host string, port uint, status int, scheme string, url string, newUrl string) {
-	ctxt := Context{}
+func shouldRedirect(t *testing.T, host string, port uint, status int, scheme string, url string, newURL string) {
+	ctxt := context{}
 	ctxt.RedirectHost = host
 	ctxt.RedirectPort = port
 	ctxt.RedirectStatus = status
@@ -26,8 +26,8 @@ func shouldRedirect(t *testing.T, host string, port uint, status int, scheme str
 	if w.Code != status {
 		t.Errorf("%v should yirld a 301 response", url)
 	}
-	if w.HeaderMap["Location"][0] != newUrl {
-		t.Errorf("%v should redirect to %v, redirected to %v", url, newUrl, w.HeaderMap["Location"][0])
+	if w.HeaderMap["Location"][0] != newURL {
+		t.Errorf("%v should redirect to %v, redirected to %v", url, newURL, w.HeaderMap["Location"][0])
 	}
 }
 

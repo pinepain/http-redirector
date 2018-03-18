@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-type Context struct {
+type context struct {
 	ListenHost     string `default:"0.0.0.0" split_words:"true" desc:"Host to listen on"`
 	ListenPort     uint   `default:"80" split_words:"true" desc:"Port to listen on"`
 	RedirectHost   string `default:"" split_words:"true" desc:"Host to redirect to. Empty hosts mean the host from HTTP request will be used."`
@@ -23,7 +23,7 @@ type Context struct {
 	LogLevel       string `default:"info" split_words:"true"`
 }
 
-func (c Context) redirectHandler(w http.ResponseWriter, req *http.Request) {
+func (c context) redirectHandler(w http.ResponseWriter, req *http.Request) {
 	host, err := getHostName(c.RedirectHost, req)
 
 	if err != nil {
@@ -62,7 +62,7 @@ func getHostName(host string, req *http.Request) (string, error) {
 	return h, nil
 }
 
-func initLog(c Context) error {
+func initLog(c context) error {
 	if "json" == c.LogFormat {
 		log.SetFormatter(&log.JSONFormatter{})
 	}
@@ -77,7 +77,7 @@ func initLog(c Context) error {
 }
 
 func main() {
-	var c Context
+	var c context
 
 	h := flag.Bool("h", false, "Print this help")
 	d := flag.Bool("d", false, "Dump config values")

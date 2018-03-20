@@ -17,6 +17,7 @@ install:
 script:
   #- dep status
   - golint
+  - go vet
   - go test -race -coverprofile=coverage.txt -covermode=atomic
   - go build
   # Let's verify that docker image is buildable

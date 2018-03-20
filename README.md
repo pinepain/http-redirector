@@ -44,11 +44,11 @@ $ curl -v 'http://localhost:8080/foo/bar?test=me'
 > 
 < HTTP/1.1 301 Moved Permanently
 < Content-Type: text/html; charset=utf-8
-< Location: https://localhost:443/foo/bar?test=me
+< Location: https://localhost/foo/bar?test=me
 < Date: Sat, 17 Mar 2018 19:18:06 GMT
 < Content-Length: 72
 < 
-<a href="https://localhost:443/foo/bar?test=me">Moved Permanently</a>.
+<a href="https://localhost/foo/bar?test=me">Moved Permanently</a>.
 
 * Connection #0 to host localhost left intact
 ```
@@ -59,7 +59,6 @@ $ curl -v 'http://localhost:8080/foo/bar?test=me'
 please, run `./http-redirector` with `-h` flag:
 
 ```
-$ ./http-redirector -h
 Usage of ./http-redirector:
   -d	Dump config values
   -h	Print this help
@@ -67,24 +66,23 @@ Usage of ./http-redirector:
 This application is configured via the environment. The following environment
 variables can be used:
 
-KEY                TYPE                DEFAULT    REQUIRED    DESCRIPTION
-LISTEN_HOST        String              0.0.0.0                Host to listen on
-LISTEN_PORT        Unsigned Integer    80                     Port to listen on
-REDIRECT_HOST      String                                     Host to redirect to. Empty hosts mean the host from HTTP request will be used.
-REDIRECT_PORT      Unsigned Integer    443                    Port to redirect to
-REDIRECT_STATUS    Integer             301                    
-REDIRECT_SCHEME    String              https                  
-LOG_FORMAT         String              txt                    Log format. Allowed values are 'txt' and 'json'
-LOG_LEVEL          String              info                   
+KEY           TYPE       DEFAULT                 REQUIRED    DESCRIPTION
+LISTEN        String     0.0.0.0:80                          Host:port to listen on
+REDIRECT      String     https://REQUEST_HOST                Destination to redirect to. You can specify schema, host and port.
+                                                             REQUEST_HOST or empty hostname means that request hostname will be used.
+STATUS        Integer    301                                 Redirect status code
+LOG_FORMAT    String     txt                                 Log format. Allowed values are 'txt' and 'json'
+LOG_LEVEL     String     info                                Logs verbosity
 ```
 
 To see what actual configuration values are, run `./http-redirector` with `-d` flag:
 
 ```
 export LOG_LEVEL=debug
-export LISTEN_PORT=8080
+export LISTEN=8080
+export REDIRECT=9090
 $ ./http-redirector -d
-{ListenHost:0.0.0.0 ListenPort:8080 RedirectHost: RedirectPort:443 RedirectStatus:301 RedirectScheme:https LogFormat:txt LogLevel:debug}
+&{Listen:8080 Redirect:9090 Status:301 LogFormat:txt LogLevel:debug}
 ```
 
 ## License
